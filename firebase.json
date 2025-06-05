@@ -1,0 +1,14 @@
+{
+    "flutter":{
+        "platforms":{
+            "dart":{
+                "lib/firebase_options.dart":{
+                    "projectId":"everypal-prod-14924",
+                    "configurations":{
+                        "web":"1:201097172376:web:07f54a117138e6fae387ed"
+                    }
+                }
+            }
+        }
+    }
+}
