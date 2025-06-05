@@ -1,9 +1,19 @@
-// 테마 변경 관리
-// -------------------------------------------------------------------------- //
-// -------------------------------------------------------------------------- //
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final auth = FirebaseAuth.instance;
+final firestore = FirebaseFirestore.instance;
+
+// 진행 프로세스 관리
+// -------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------- //
+final loadingProcessState = StateProvider.autoDispose<bool>((ref) => false);
+
+// 테마 변경 관리
+// -------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------- //
 final themeState = StateNotifierProvider<ThemeNotifier, ThemeMode>((ref) {
   return ThemeNotifier();
 });
