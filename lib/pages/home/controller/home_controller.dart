@@ -26,31 +26,41 @@ class HomeController {
     final loadingState = ref.read(loadingProcessState.notifier);
     try {
       loadingState.state = true;
-      // final response = await Future.wait([
-      //   Future.delayed(const Duration(seconds: 1)),
-      //   auth.signInWithEmailAndPassword(email: email, password: password),
-      // ]);
-      // final UserCredential userCredential = response[1];
-      // final User? user = userCredential.user;
-      // if (user != null) {
-      //   if (context.mounted) {
-      //     if (!user.emailVerified) {
-      //       showAlertDialog(context: context, message: "접근 권한이 없습니다");
-      //     } else {
-      //       log("로그인 완료");
-      //       Navigator.pushNamed(context, Routes.main);
-      //     }
-      //   }
-      // }
-      await Future.delayed(const Duration(seconds: 5));
-      if (context.mounted) Navigator.pushNamed(context, Routes.main);
+      await Future.delayed(const Duration(seconds: 1));
+      if (email == "pal.dev.co@gmail.com") {
+        final response = await auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        final UserCredential userCredential = response;
+        final User? user = userCredential.user;
+        if (user != null) {
+          if (context.mounted) {
+            if (!user.emailVerified) {
+              showAlertDialog(context: context, message: "접근 권한이 없습니다");
+            } else {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.main,
+                (route) => false,
+              );
+            }
+          }
+        }
+        await Future.delayed(const Duration(seconds: 5));
+        if (context.mounted) Navigator.pushNamed(context, Routes.main);
+      } else {
+        if (context.mounted) {
+          showAlertDialog(context: context, message: "접근 권한이 없습니다");
+        }
+      }
     } catch (e) {
       log("signInWithEmail: $e");
       if (context.mounted) {
         showAlertDialog(context: context, message: "오류가 발생했습니다. 다시 시도해주세요.");
       }
     } finally {
-      loadingState.state = false;
+      if (context.mounted) loadingState.state = false;
     }
   }
 }

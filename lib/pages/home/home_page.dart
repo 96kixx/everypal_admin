@@ -121,7 +121,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             CustomElevatedButton(
               buttonWidth: 300,
-              buttonHeight: 42,
+              buttonHeight: 38,
               textColor: context.theme.textReversed,
               backgroundColor: context.theme.textColor,
               loadingColor: context.theme.textReversed,

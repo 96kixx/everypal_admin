@@ -35,7 +35,7 @@ void showAlertDialog({
               Navigator.pop(context);
               onPressed;
             },
-            text: "확인인",
+            text: "확인",
             buttonWidth: 130,
           ),
         ],
