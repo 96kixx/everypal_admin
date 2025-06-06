@@ -1,11 +1,9 @@
 import 'package:everypal_admin/common/widgets/custom_elevated_button.dart';
 import 'package:everypal_admin/common/widgets/custom_text_field.dart';
-import 'package:everypal_admin/common/widgets/icon_container.dart';
 import 'package:everypal_admin/core/provider/device_state.dart';
 import 'package:everypal_admin/core/service/validation.dart';
 import 'package:everypal_admin/core/theme/custom_theme.dart';
 import 'package:everypal_admin/pages/home/controller/home_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -59,6 +57,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
   }
 
+  void updateText() {
+    setState(() {
+      emailError = null;
+      passwordError = null;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -90,66 +95,30 @@ class _HomePageState extends ConsumerState<HomePage> {
                 fontSize: 26,
               ),
             ),
-            SizedBox(height: 15),
-            Stack(
-              children: [
-                SizedBox(
-                  width: 300,
-                  child: CustomTextField(
-                    onChanged:
-                        (email) => setState(() {
-                          emailError = null;
-                          passwordError = null;
-                        }),
-                    fontSize: 15,
-                    textAlign: TextAlign.start,
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    hintText: "Email",
-                  ),
-                ),
-                if (emailError != null)
-                  const Positioned(
-                    right: 10,
-                    top: 8,
-                    child: Icon(
-                      CupertinoIcons.exclamationmark_circle,
-                      color: Colors.red,
-                      size: 22,
-                    ),
-                  ),
-              ],
+            Container(
+              width: 300,
+              margin: EdgeInsets.only(top: 15, bottom: 10),
+              child: CustomTextField(
+                onChanged: (email) => updateText(),
+                fontSize: 15,
+                textAlign: TextAlign.start,
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                hintText: "Email",
+              ),
             ),
-            const SizedBox(height: 10),
-            Stack(
-              children: [
-                SizedBox(
-                  width: 300,
-                  child: CustomTextField(
-                    onChanged:
-                        (password) => setState(() => passwordError = null),
-                    obscureText: !isVisible,
-                    fontSize: 15,
-                    textAlign: TextAlign.start,
-                    hintText: "Password",
-                    controller: passwordController,
-                  ),
-                ),
-                Positioned(
-                  right: 12,
-                  top: 11,
-                  child: GestureDetector(
-                    onTap: () => setState(() => isVisible = !isVisible),
-                    child: IconContainer(
-                      color: context.theme.iconColor,
-                      icon: isVisible ? "eye-off.svg" : "eye.svg",
-                      size: 18,
-                    ),
-                  ),
-                ),
-              ],
+            Container(
+              width: 300,
+              margin: EdgeInsets.only(bottom: 15),
+              child: CustomTextField(
+                onChanged: (password) => setState(() => passwordError = null),
+                obscureText: !isVisible,
+                fontSize: 15,
+                textAlign: TextAlign.start,
+                hintText: "Password",
+                controller: passwordController,
+              ),
             ),
-            const SizedBox(height: 15),
             CustomElevatedButton(
               buttonWidth: 300,
               buttonHeight: 42,
